@@ -77,8 +77,8 @@ void handle_math_func()
 	// 	b = 19;
 	// 	swap_x(a, b);
 	// }
-	access_invalid_addr();
-	leak_dynamic_mem();
-	mem_init_check();
-	access_invalid_point();
+	// access_invalid_addr();
+	// leak_dynamic_mem();
+	// mem_init_check();
+	// access_invalid_point();
 }

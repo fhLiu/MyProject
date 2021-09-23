@@ -1,5 +1,7 @@
 #include <iostream>
 #include "my_math.h"
+#include "TcpServer.h"
+#include "TcpClient.h"
 
 using namespace std;
 

@@ -1,12 +1,11 @@
 #pragma once
 #include <iostream>
-#include <socket.h>
 #include <string>
 
+#include "TcpCommon.h"
+
 using namespace std;
-const int SOCKET_BUFFER_1K = 1024;
-const int SOCKET_BUFFER_2K = 2 * 1024;
-const int SOCKET_BUFFER_1M = 1024 * 1024;
+
 
 struct TcpServerDev
 {
@@ -19,6 +18,9 @@ struct TcpServerDev
 	int Accept();
 	int ReadBuf();
 	int SendBuf();
+
+private:
+	int Close(int& fd);
 
 private:
 	string server_ip;
