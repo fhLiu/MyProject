@@ -14,6 +14,6 @@ int main()
 	handle_math_func();
 	// handle_mul_thread();
 	// handle_mul_process_deamon();
-	handle_communication_by_process();
+	// handle_communication_by_process();
 	return 0;
 }

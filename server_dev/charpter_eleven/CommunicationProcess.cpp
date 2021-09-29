@@ -46,13 +46,6 @@ int communication_pipe_process()
     return 0;
 }
 
-int communication_message_queue()
-{
-    
-
-    return 0;
-}
-
 void handle_communication_by_process()
 {
     communication_pipe_process();
