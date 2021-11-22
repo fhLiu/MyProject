@@ -6,4 +6,4 @@ FILE(GLOB  fans_src
 "${fans_dir}/*.cpp"
 )
 
-ADD_LIBRARY(${PROJECT_NAME} -SHARED ${fans_src})
+ADD_LIBRARY(${PROJECT_NAME} SHARED ${fans_src})

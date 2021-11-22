@@ -10,6 +10,8 @@ SET(timeline_dir                "${main_dir}/timeline")
 SET(blog_dir                    "${main_dir}/blog")
 SET(utiltools_dir               "${main_dir}/utiltools")
 
+SET(CMAKE_CXX_FLAGS                 "${CMAKE_CXX_FLAGS} -std=c++11 -W -g -pthread")
+
 INCLUDE_DIRECTORIES(
 "${base_dir}/include"
 )
@@ -32,4 +34,4 @@ FILE(GLOB        main_src
 
 ADD_EXECUTABLE(${PROJECT_NAME}      ${main_src})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME}   gtest hiredis re_login re_blog re_timeline re_utiltools re_fans)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME}   gtest hiredis pthread re_login re_blog re_timeline re_utiltools re_fans)

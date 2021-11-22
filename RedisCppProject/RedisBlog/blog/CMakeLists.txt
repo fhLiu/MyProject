@@ -6,4 +6,4 @@ FILE(GLOB  blog_src
 "${blog_dir}/*.cpp"
 )
 
-ADD_LIBRARY(${PROJECT_NAME} -SHARED ${blog_src})
+ADD_LIBRARY(${PROJECT_NAME} SHARED ${blog_src})

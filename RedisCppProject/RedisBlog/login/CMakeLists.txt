@@ -6,4 +6,4 @@ FILE(GLOB  login_src
 "${login_dir}/*.cpp"
 )
 
-ADD_LIBRARY(${PROJECT_NAME} -SHARED ${login_src})
+ADD_LIBRARY(${PROJECT_NAME} SHARED ${login_src})
