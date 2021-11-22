@@ -1,0 +1,11 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+
+PROJECT(jsonapp)
+
+INCLUDE_DIRECTORIES(
+"/usr/local/include"
+)
+
+FILE(GLOB  json_src
+"${JSONAPP_DIR}/*.cpp"
+)
