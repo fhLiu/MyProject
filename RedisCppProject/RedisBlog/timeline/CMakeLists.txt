@@ -6,4 +6,4 @@ FILE(GLOB  timeline_src
 "${timeline_dir}/*.cpp"
 )
 
-ADD_LIBRARY(${PROJECT_NAME} -SHARED ${timeline_src})
+ADD_LIBRARY(${PROJECT_NAME} SHARED ${timeline_src})

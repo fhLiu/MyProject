@@ -6,4 +6,4 @@ FILE(GLOB  comment_src
 "${comment_dir}/*.cpp"
 )
 
-ADD_LIBRARY(${PROJECT_NAME} -SHARED ${comment_src})
+ADD_LIBRARY(${PROJECT_NAME} SHARED ${comment_src})
