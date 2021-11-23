@@ -44,3 +44,13 @@ TEST_F(RedisUtiltoolsTest, redis_global_repo_is_safety)
 {
     EXPECT_NE(ctxt, nullptr);
 }
+
+TEST_F(RedisUtiltoolsTest, redis_global_repo_is_unique)
+{
+    auto& instance = RedisGlobDataRepo::GetInstance();
+    auto firstid = instance.GenUserId();
+    UInt64 valid_first_id = 1000000000000;
+    UInt64 invalid_first_id = 100;
+    EXPECT_EQ(firstid, valid_first_id);
+    EXPECT_EQ(firstid, invalid_first_id);
+}
