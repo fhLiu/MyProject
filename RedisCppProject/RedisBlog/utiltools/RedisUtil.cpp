@@ -21,7 +21,7 @@ RedisResult RedisUtil::ConnectRedis()
     ctxt = redisConnect(server_ip.c_str(), port);
     if (ctxt == nullptr || ctxt->err != 0)
     {
-        cerr<<"redis connected failed, cause is : "<<ctxt->errstr>>endl;
+        cerr<<"redis connected failed, cause is : "<<ctxt->errstr<<endl;
         return RedisResult::ERROR;
     }
     
@@ -29,9 +29,9 @@ RedisResult RedisUtil::ConnectRedis()
     return RedisResult::OK;
 }
 
-bool RedisUtil::ExecCommand(const std::string& re_command)
+RedisResult RedisUtil::ExecCommand(const std::string& re_command)
 {
-    reply = redisCommand(ctxt, re_command.c_str());
+    reply = (redisReply*)redisCommand(ctxt, re_command.c_str());
     if (reply == nullptr || reply->type == REDIS_REPLY_ERROR)
     {
         cerr<<"exec command failed...";
@@ -73,5 +73,3 @@ void RedisUtil::FreeCtxt()
         ctxt = nullptr;
     }
 }
-
- Redis

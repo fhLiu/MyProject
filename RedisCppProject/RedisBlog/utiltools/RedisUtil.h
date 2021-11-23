@@ -11,7 +11,7 @@ using SInt16 = short;
 using UInt8  = unsigned char;
 using SInt8  = char;
 
-enum strcut RedisResult : UInt8
+enum struct RedisResult : UInt8
 {OK, ERROR};
 
 struct RedisUtil
