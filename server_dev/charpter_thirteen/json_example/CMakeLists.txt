@@ -9,3 +9,6 @@ INCLUDE_DIRECTORIES(
 FILE(GLOB  json_src
 "${JSONAPP_DIR}/*.cpp"
 )
+
+ADD_LIBRARY(${PROJECT_NAME} SHARED ${json_src})
+
