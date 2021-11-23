@@ -2,8 +2,18 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
 PROJECT(RedisApp)
 
+option(WORKMODE  "Build for work mode" ON)
+
+add_definitions(
+    -DWORKMODE
+)
+
 SET(main_dir                    "${CMAKE_CURRENT_SOURCE_DIR}")
-SET(base_dir                    "/usr/local")
+IF(WORKMODE)
+    SET(base_dir                    "/home/users/andrew2_liu/thirdlibrary")
+ELSE()
+    SET(base_dir                    "/usr/local")
+ENDIF()
 SET(login_dir                   "${main_dir}/login")
 SET(fans_dir                    "${main_dir}/fans")
 SET(timeline_dir                "${main_dir}/timeline")
@@ -18,7 +28,9 @@ INCLUDE_DIRECTORIES(
 
 LINK_DIRECTORIES(
     "${base_dir}/lib"
+IF(NOT WORKMODE)
     "${base_dir}/lib64"
+ENDIF()
 )
 
 ADD_SUBDIRECTORY("${login_dir}"                                 re_login)
