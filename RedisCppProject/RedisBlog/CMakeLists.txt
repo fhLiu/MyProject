@@ -9,6 +9,7 @@ add_definitions(
 )
 
 SET(main_dir                    "${CMAKE_CURRENT_SOURCE_DIR}")
+SET(utiltools_dir               "${main_dir}/utiltools")
 IF(WORKMODE)
     SET(base_dir                    "/home/users/andrew2_liu/thirdlibrary")
 ELSE()
@@ -18,7 +19,6 @@ SET(login_dir                   "${main_dir}/login")
 SET(fans_dir                    "${main_dir}/fans")
 SET(timeline_dir                "${main_dir}/timeline")
 SET(blog_dir                    "${main_dir}/blog")
-SET(utiltools_dir               "${main_dir}/utiltools")
 
 SET(CMAKE_CXX_FLAGS                 "${CMAKE_CXX_FLAGS} -std=c++11 -W -g -pthread")
 
