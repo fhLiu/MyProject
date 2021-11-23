@@ -14,18 +14,14 @@ UInt64 RedisGlobDataRepo::GenUserId()
 
 UInt64 RedisGlobDataRepo::GenBlogsId()
 {
-    {
-        std::lock_guard<std::mutex> lck(blog_mutex);
-        blog_id++;
-    }
-    return blog_id;
+    std::lock_guard<std::mutex> lck(blog_mutex);
+
+    return blog_id++;
 }
 
 UInt64 RedisGlobDataRepo::GenCommentId()
 {
-    {
-        std::lock_guard<std::mutex> lck(comment_mutex);
-        comment_id++;
-    }
-    return comment_id;
+    std::lock_guard<std::mutex> lck(comment_mutex);
+ 
+    return comment_id++;
 }

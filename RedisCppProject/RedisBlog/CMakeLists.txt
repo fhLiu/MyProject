@@ -42,6 +42,11 @@ ADD_SUBDIRECTORY("${utiltools_dir}"                             re_utiltools)
 
 FILE(GLOB        main_src
 "${main_dir}/*.cpp"
+"${login_dir}/*.cc"
+"${fans_dir}/*.cc"
+"${timeline_dir}/*.cc"
+"${blog_dir}/*.cc"
+"${utiltools_dir}/*.cc"
 )
 
 ADD_EXECUTABLE(${PROJECT_NAME}      ${main_src})
