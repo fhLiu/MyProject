@@ -57,8 +57,7 @@ std::string RedisLogin::Login(RedisUtil& util, const UserInfo& user, const std::
             break;
         }
 
-        re_command.assign("HGET ");
-        re_command += user.email;
+        MakeEmail2UidCmd(RedisOperator::GET, user, 0);
         if( RedisResult::OK !=util.ExecCommand(re_command))
         {
             break;
@@ -70,6 +69,7 @@ std::string RedisLogin::Login(RedisUtil& util, const UserInfo& user, const std::
             break;
         }
         emp.assign(reply->str, reply->len);
+        
 
     } while (0);
     
