@@ -31,6 +31,7 @@ RedisResult RedisUtil::ConnectRedis()
 
 RedisResult RedisUtil::ExecCommand(const std::string& re_command)
 {
+    cout<<"exec command is : "<<re_command<<endl;
     reply = (redisReply*)redisCommand(ctxt, re_command.c_str());
     if (reply == nullptr || reply->type == REDIS_REPLY_ERROR)
     {

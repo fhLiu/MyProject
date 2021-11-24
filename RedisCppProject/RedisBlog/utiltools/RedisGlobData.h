@@ -10,6 +10,8 @@ RedisSingleton(RedisGlobDataRepo)
     UInt64 GenBlogsId();
     UInt64 GenCommentId();
 
+    void ClearAll();
+
 private:
     RedisGlobDataRepo();
 

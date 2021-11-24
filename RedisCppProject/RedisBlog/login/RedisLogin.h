@@ -5,9 +5,9 @@
 
 struct UserInfo
 {
-    UserInfo(std::string name, std::string email, UInt8 age):name(""),
-                                                            email(""),
-                                                            age(0){}
+    UserInfo(std::string& name, std::string& email, UInt8 age):name(name),
+                                                            email(email),
+                                                            age(age){}
     std::string name;
     std::string email;
     UInt8       age;

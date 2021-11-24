@@ -28,7 +28,8 @@ struct RedisUtiltoolsTest : public testing::Test
             redisFree(ctxt);
             ctxt = nullptr;
         }
-        
+        auto& instance = RedisGlobDataRepo::GetInstance();
+        instance.ClearAll();
     }
     RedisUtiltoolsTest():ctxt(nullptr), 
                          reply(nullptr),
@@ -87,7 +88,7 @@ TEST_F(RedisUtiltoolsTest, redis_global_repo_is_unique_when_mutil_thread_scene)
         tharr[i].join();
     }
     auto& instance = RedisGlobDataRepo::GetInstance();
-    UInt64 last_id = MAX_THREAD_NUMS + 1;
+    UInt64 last_id = MAX_THREAD_NUMS;
     EXPECT_EQ(instance.GenCommentId(), last_id);
     
 }

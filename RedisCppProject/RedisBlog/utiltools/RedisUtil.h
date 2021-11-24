@@ -12,7 +12,7 @@ using UInt8  = unsigned char;
 using SInt8  = char;
 
 enum struct RedisResult : UInt8
-{OK, ERROR};
+{OK, NIL, ERROR};
 
 enum struct RedisOperator : UInt8
 {GET, SET};
