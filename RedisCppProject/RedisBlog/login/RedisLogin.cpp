@@ -140,19 +140,20 @@ void RedisLogin::MakeUserInfoCmd(RedisOperator type,const UserInfo& user, UInt64
     {
         re_command.assign("HMGET ");
         re_command +=  user_key;
+        re_command += " id name email"
 
     }else{
         re_command.assign("HMSET ");
         re_command +=  user_key;
-        re_command += " {id:";
+        re_command += " id ";
         re_command += std::to_string(uid);
-        re_command += ", name:";
+        re_command += " name ";
         re_command += user.name;
-        re_command += ", email:";
+        re_command += " email ";
         re_command += user.email;
-        re_command += ", password:";
+        re_command += " password ";
         re_command += passwd;
-        re_command += "}";
+        re_command += "";
     }
     
 

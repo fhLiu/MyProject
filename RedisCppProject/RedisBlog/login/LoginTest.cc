@@ -18,10 +18,14 @@ struct RedisLoginTest : public testing::Test
         auto& instance = RedisGlobDataRepo::GetInstance();
         instance.ClearAll();
     }
-    RedisLoginTest():server_ip("127.0.0.1"),server_port(6379){}
+    RedisLoginTest():server_ip("127.0.0.1"),
+                     server_port(6379),
+                     clear_cmd("FLUSHALL")
+                     {}
 protected:
     std::string server_ip;
     UInt16      server_port;
+    std::string clear_cmd;
 };
 
 
@@ -35,4 +39,5 @@ TEST_F(RedisLoginTest, redis_blogs_login_registration_new_user_successfull)
     ASSERT_EQ(RedisResult::OK, util.ConnectRedis());
     RedisLogin login;
     EXPECT_EQ(login.Registration(util, user, passwd), RedisResult::OK);
+    // util.ExecCommand(clear_cmd);
 }
