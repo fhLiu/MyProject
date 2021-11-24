@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
 PROJECT(RedisApp)
 
-option(WORKMODE  "Build for work mode" OFF)
+option(WORKMODE  "Build for work mode" ON)
 
 add_definitions(
     -DWORKMODE
@@ -24,6 +24,7 @@ SET(CMAKE_CXX_FLAGS                 "${CMAKE_CXX_FLAGS} -std=c++11 -W -g -pthrea
 
 INCLUDE_DIRECTORIES(
 "${base_dir}/include"
+"${utiltools_dir}"
 )
 
 LINK_DIRECTORIES(
@@ -33,11 +34,11 @@ IF(NOT WORKMODE)
 ENDIF()
 )
 
+ADD_SUBDIRECTORY("${utiltools_dir}"                             re_utiltools)
 ADD_SUBDIRECTORY("${login_dir}"                                 re_login)
 ADD_SUBDIRECTORY("${fans_dir}"                                  re_fans)
 ADD_SUBDIRECTORY("${timeline_dir}"                              re_timeline)
 ADD_SUBDIRECTORY("${blog_dir}"                                  re_blog)
-ADD_SUBDIRECTORY("${utiltools_dir}"                             re_utiltools)
 
 
 FILE(GLOB        main_src
@@ -51,4 +52,4 @@ FILE(GLOB        main_src
 
 ADD_EXECUTABLE(${PROJECT_NAME}      ${main_src})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME}   gtest hiredis pthread re_login re_blog re_timeline re_utiltools re_fans)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME}   gtest hiredis pthread re_utiltools re_login re_blog re_timeline re_fans)
