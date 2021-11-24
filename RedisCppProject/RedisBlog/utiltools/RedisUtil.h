@@ -14,6 +14,9 @@ using SInt8  = char;
 enum struct RedisResult : UInt8
 {OK, ERROR};
 
+enum struct RedisOperator : UInt8
+{GET, SET};
+
 struct RedisUtil
 {
     RedisUtil(std::string& ip_addr, UInt16 port);

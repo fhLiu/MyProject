@@ -26,7 +26,10 @@ protected:
 TEST_F(RedisLoginTest, redis_blogs_login_registration_new_user_successfull)
 {
     std::string email("119493xxxx@qq.com");
+    std::string passwd("123456");
+    UserInfo user("fhLiu", email, 30);
     RedisUtil util(server_ip, server_port);
+    ASSERT_EQ(RedisResult::OK, util.ConnectRedis());
     RedisLogin login;
-    EXPECT_EQ(login.Registration(util, email), RedisResult::OK);
+    EXPECT_EQ(login.Registration(util, user, passwd), RedisResult::OK);
 }
