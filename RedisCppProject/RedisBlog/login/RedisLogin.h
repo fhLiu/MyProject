@@ -27,8 +27,8 @@ private:
     void MakeUserKey(UInt64 uid);
     void MakeEmail2UidKey();
 
-    void MakeEmail2UidCmd(std::string type,const UserInfo& user, UInt64 uid);
-    void MakeUserInfoCmd(std::string type,const UserInfo& user, UInt64 uid, const std::string& passwd);
+    void MakeEmail2UidCmd(RedisOperator type,const UserInfo& user, UInt64 uid);
+    void MakeUserInfoCmd(RedisOperator type,const UserInfo& user, UInt64 uid, const std::string& passwd);
 private:
     std::string  re_command;
     std::string  user_key;
