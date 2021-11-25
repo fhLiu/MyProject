@@ -25,6 +25,7 @@ struct RedisLogin
 private:
     RedisResult IsExist(RedisUtil& util);
     void MakeUserKey(UInt64 uid);
+    void MakeUserKey(std::string& uid);
     void MakeEmail2UidKey();
 
     void MakeEmail2UidCmd(RedisOperator type,const UserInfo& user, UInt64 uid);

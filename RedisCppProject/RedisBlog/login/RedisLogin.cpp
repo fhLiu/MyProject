@@ -21,7 +21,7 @@ RedisResult RedisLogin::Registration(RedisUtil& util, const UserInfo& user, cons
     if (RedisResult::NIL != IsExist(util))
     {
         cerr<<"the email has registration, please login with it..."<<endl;
-        return RedisResult::ERROR;
+        return RedisResult::OK;
     }
     auto& instance = RedisGlobDataRepo::GetInstance();
     auto user_id = instance.GenUserId();
@@ -49,8 +49,11 @@ RedisResult RedisLogin::Registration(RedisUtil& util, const UserInfo& user, cons
 std::string RedisLogin::Login(RedisUtil& util, const UserInfo& user, const std::string& passwd)
 {
     std::string emp("");
+    std::string struid("");
+    redisReply *reply = nullptr;
     do
     {
+        MakeEmail2UidCmd(RedisOperator::GET, user, 0);
         if (RedisResult::OK != IsExist(util))
         {
             cerr<<"the email not registration, please registration with it..."<<endl;
@@ -62,24 +65,98 @@ std::string RedisLogin::Login(RedisUtil& util, const UserInfo& user, const std::
         {
             break;
         }
-        auto reply = util.GetReply();
+        reply = util.GetReply();
         if(reply->type != REDIS_REPLY_STRING )
         {
             cerr<<"result type not string, type is : "<<reply->type<<endl;
             break;
         }
         emp.assign(reply->str, reply->len);
-        
+        struid.assign(reply->str, reply->len);
+        util.FreeReply();
+        reply = nullptr;
 
+        //check user info
+        re_command.assign("HMGET ");
+        re_command += "weibo::user::";
+        re_command += emp;
+        re_command += " password";
+        struid = std::move(emp);
+        if( RedisResult::OK !=util.ExecCommand(re_command))
+        {
+            break;
+        }
+        reply = util.GetReply();
+        if (reply->type == REDIS_REPLY_NIL || reply->type != REDIS_REPLY_ARRAY)
+        {
+           cerr<<"resp type is "<<reply->type<<endl;
+           break;
+        }
+        for(UInt8 index = 0; index < reply->elements; index++)
+        {
+            if(reply->element[index]->type == REDIS_REPLY_STRING)
+            {
+                emp.assign(reply->element[index]->str, reply->element[index]->len);
+            }
+        }
+
+        if (passwd != emp)
+        {
+            cerr<<"user "<<user.name<<" passwd is error, please input again"<<endl;
+            emp.clear();
+            break;
+        }
+        emp = std::move(struid);
     } while (0);
-    
+
+    util.FreeReply();
+    reply = nullptr;
     return emp;
 }
 
 RedisResult RedisLogin::UnRegistration(RedisUtil& util, const UserInfo& user, const std::string& passwd)
 {
+    std::string uid = Login(util, user, passwd);
+    RedisResult result = RedisResult::OK;
+    do
+    {
+        if(uid.empty())
+        {
+            cerr<<"Unregistration failed..."<<endl;
+            result = RedisResult::OK;
+            break;
+        }
 
-    return RedisResult::OK;
+        //clear user info map
+        re_command.assign("HDEL ");
+        MakeUserKey(uid);
+        re_command += user_key;
+        re_command += " id name email password";
+        if(RedisResult::ERROR == util.ExecCommand(re_command))
+        {
+            cerr<<"del user info map error..."<<uid<<endl;
+            result = RedisResult::ERROR;
+        }
+        util.FreeReply();
+
+        //clear email_to_uid
+        MakeEmail2UidKey();
+        re_command.assign("HDEL ");
+        re_command += email_2_uid_key;
+        re_command += " ";
+        re_command += user.email;
+        if(RedisResult::ERROR == util.ExecCommand(re_command))
+        {
+            cerr<<"del email to uid map error..."<<uid<<endl;
+            result = RedisResult::ERROR;
+        }
+        util.FreeReply();
+
+        //TODO clear blog comment timeline fans
+    } while (0);
+    
+
+    return result;
 }
 
 RedisResult RedisLogin::IsExist(RedisUtil& util)
@@ -104,7 +181,12 @@ void RedisLogin::MakeUserKey( UInt64 uid)
 {
     user_key.assign("weibo::user::");
     user_key += std::to_string(uid);
+}
 
+void RedisLogin::MakeUserKey(std::string& uid)
+{
+    user_key.assign("weibo::user::");
+    user_key += uid;
 }
 
 void RedisLogin::MakeEmail2UidKey()
@@ -120,7 +202,7 @@ void RedisLogin::MakeEmail2UidCmd(RedisOperator type,const UserInfo& user, UInt6
         re_command.assign("HGET ");
     }
     else{
-        re_command.assign("HSET ");
+        re_command.assign("HSETNX ");
     }
     re_command += email_2_uid_key;
     re_command += " ";
@@ -140,7 +222,7 @@ void RedisLogin::MakeUserInfoCmd(RedisOperator type,const UserInfo& user, UInt64
     {
         re_command.assign("HMGET ");
         re_command +=  user_key;
-        re_command += " id name email"
+        re_command += " id name email";
 
     }else{
         re_command.assign("HMSET ");
@@ -156,5 +238,4 @@ void RedisLogin::MakeUserInfoCmd(RedisOperator type,const UserInfo& user, UInt64
         re_command += "";
     }
     
-
 }

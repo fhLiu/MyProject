@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
 PROJECT(RedisApp)
 
-option(WORKMODE  "Build for work mode" OFF)
+option(WORKMODE  "Build for work mode" ON)
 
 add_definitions(
     -DWORKMODE
