@@ -12,7 +12,7 @@ RedisBlog::~RedisBlog()
     
 }
 
-RedisResult RedisBlog::CreateBlog(RedisUtil& util, UserInfo)
+RedisResult RedisBlog::CreateBlog(RedisUtil& util, UserInfo& user)
 {
 
     return RedisResult::OK;
