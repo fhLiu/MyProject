@@ -74,3 +74,8 @@ void RedisUtil::FreeCtxt()
         ctxt = nullptr;
     }
 }
+
+long long GetCurrentSysTimes()
+{
+    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+}

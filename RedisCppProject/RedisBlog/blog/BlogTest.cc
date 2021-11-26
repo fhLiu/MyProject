@@ -1,4 +1,5 @@
 #include "RedisBlog.h"
+#include "RedisUtil.h"
 #include "gtest/gtest.h"
 #include "hiredis/hiredis.h"
 
@@ -24,5 +25,5 @@ private:
 
 TEST_F(RedisBlogsTest, redis_blogs_blog_keys_create_successfull)
 {
-
+    cout<<"current clock is : "<<GetCurrentSysTimes()<<endl;
 }

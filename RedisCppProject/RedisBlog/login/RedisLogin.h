@@ -3,16 +3,6 @@
 #include <memory>
 #include <string>
 
-struct UserInfo
-{
-    UserInfo(std::string& name, std::string& email, UInt8 age):name(name),
-                                                            email(email),
-                                                            age(age){}
-    std::string name;
-    std::string email;
-    UInt8       age;
-};
-
 
 struct RedisLogin
 {

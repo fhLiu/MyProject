@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <chrono>
 #include "hiredis/hiredis.h"
 
 using UInt64 = unsigned long long;
@@ -16,6 +17,16 @@ enum struct RedisResult : UInt8
 
 enum struct RedisOperator : UInt8
 {GET, SET};
+
+struct UserInfo
+{
+    UserInfo(std::string& name, std::string& email, UInt8 age):name(name),
+                                                            email(email),
+                                                            age(age){}
+    std::string name;
+    std::string email;
+    UInt8       age;
+};
 
 struct RedisUtil
 {
@@ -34,3 +45,5 @@ private:
     redisContext   *ctxt;
     redisReply     *reply;
 };
+
+long long GetCurrentSysTimes();
