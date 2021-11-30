@@ -9,3 +9,8 @@ AbFactoryTwo::~AbFactoryTwo()
 {
     
 }
+
+AbProducer *AbFactoryTwo::CreateProduct()
+{
+    return new AbProducerTwo();
+}

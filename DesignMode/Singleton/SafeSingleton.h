@@ -9,6 +9,7 @@ struct BaseSingleton
         return instance;
     }
 
+    virtual ~BaseSingleton(){}
 protected:
     BaseSingleton(){};
     BaseSingleton& operator=(const BaseSingleton&){}

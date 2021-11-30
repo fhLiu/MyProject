@@ -9,17 +9,19 @@ OPTION(WORKMODE    "WORK MODE SELECT"  ON)
 SET(main_dir                            "${CMAKE_CURRENT_SOURCE_DIR}")
 SET(singleton_dir                       "${main_dir}/../Singleton")
 SET(simplefac_dir                       "${main_dir}/../SimpleFactory")
-SET(abstractfac_dir                     "${main_dir}/../AbstractFactory")
+SET(factorymethod_dir                   "${main_dir}/../FactoryMethod")
+SET(builder_dir                         "${main_dir}/../BuilderMode")
 IF(WORKMODE)
-    SET(base_dir                    "/home/users/andrew2_liu/thirdlibrary")
+    SET(base_dir                        "/home/users/andrew2_liu/thirdlibrary")
 ELSE()
-    SET(base_dir                    "/usr/local")
+    SET(base_dir                         "/usr/local")
 ENDIF()
 
 INCLUDE_DIRECTORIES(
     "${singleton_dir}"
     "${simplefac_dir}"
-    "${abstractfac_dir}"
+    "${factorymethod_dir}"
+    "${builder_dir}"
     "${base_dir}/include"
 )
 
@@ -36,9 +38,9 @@ ENDIF()
 
 ADD_SUBDIRECTORY("${singleton_dir}"              singleton)
 ADD_SUBDIRECTORY("${simplefac_dir}"              simplefac)
-ADD_SUBDIRECTORY("${abstractfac_dir}"            abstractfac)
-
+ADD_SUBDIRECTORY("${factorymethod_dir}"            factorymethod)
+ADD_SUBDIRECTORY("${builder_dir}"                builder)
 
 ADD_EXECUTABLE(${PROJECT_NAME}  ${app_src})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME}  gtest pthread singleton simplefac abstractfac)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME}  gtest pthread singleton simplefac factorymethod builder)
