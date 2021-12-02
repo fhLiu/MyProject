@@ -11,6 +11,7 @@ SET(singleton_dir                       "${main_dir}/../Singleton")
 SET(simplefac_dir                       "${main_dir}/../SimpleFactory")
 SET(factorymethod_dir                   "${main_dir}/../FactoryMethod")
 SET(builder_dir                         "${main_dir}/../BuilderMode")
+SET(proxy_dir                           "${main_dir}/../ProxyMode")
 IF(WORKMODE)
     SET(base_dir                        "/home/users/andrew2_liu/thirdlibrary")
 ELSE()
@@ -22,6 +23,7 @@ INCLUDE_DIRECTORIES(
     "${simplefac_dir}"
     "${factorymethod_dir}"
     "${builder_dir}"
+    "${proxy_dir}"
     "${base_dir}/include"
 )
 
@@ -36,11 +38,12 @@ IF(NOT WORKMODE)
 ENDIF()
 )
 
-ADD_SUBDIRECTORY("${singleton_dir}"              singleton)
-ADD_SUBDIRECTORY("${simplefac_dir}"              simplefac)
-ADD_SUBDIRECTORY("${factorymethod_dir}"            factorymethod)
-ADD_SUBDIRECTORY("${builder_dir}"                builder)
+ADD_SUBDIRECTORY("${singleton_dir}"                 singleton)
+ADD_SUBDIRECTORY("${simplefac_dir}"                 simplefac)
+ADD_SUBDIRECTORY("${factorymethod_dir}"             factorymethod)
+ADD_SUBDIRECTORY("${builder_dir}"                   builder)
+ADD_SUBDIRECTORY("${proxy_dir}"                     czproxy)
 
 ADD_EXECUTABLE(${PROJECT_NAME}  ${app_src})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME}  gtest pthread singleton simplefac factorymethod builder)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME}  gtest pthread singleton simplefac factorymethod builder czproxy)

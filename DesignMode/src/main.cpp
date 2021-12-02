@@ -6,6 +6,7 @@
 #include "Direction.h"
 #include "AbFactoryOne.h"
 #include "AbFactoryTwo.h"
+#include "CZSpecialtyProxy.h"
 
 using namespace std;
 
@@ -54,6 +55,13 @@ TEST_F(DesignModeTest, BUILD_MODE_AUTOMOBILE)
 
     direc.Reset(new BMAutomobile());
     direc.CreateAutomobile();
+}
+
+TEST_F(DesignModeTest, PROXY_MODE_CZSPECIALTY)
+{
+    Specialty *specialty = new ARSpecialty();
+    std::shared_ptr<Specialty> proxy(new CZSpecialtyProxy(specialty));
+    proxy->Show();
 }
 
 
