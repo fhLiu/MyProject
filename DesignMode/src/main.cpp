@@ -7,6 +7,8 @@
 #include "AbFactoryOne.h"
 #include "AbFactoryTwo.h"
 #include "CZSpecialtyProxy.h"
+#include "OpticalAdapter.h"
+#include "ElectricAdapter.h"
 
 using namespace std;
 
@@ -64,7 +66,15 @@ TEST_F(DesignModeTest, PROXY_MODE_CZSPECIALTY)
     proxy->Show();
 }
 
-
+TEST_F(DesignModeTest, ADAPTER_MODE_DRIVE_SELECTION)
+{
+    ElectricMotor *emm = new ElectricMotor();
+    OpticalMotor *omm = new OpticalMotor();
+    std::shared_ptr<Motor> sp(new ElectricAdapter(emm));
+    sp->Drive();
+    sp.reset(new OpticalAdapter(omm));
+    sp->Drive();
+}
 
 int main(int argc, char *argv[])
 {
