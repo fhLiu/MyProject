@@ -5,7 +5,8 @@ using namespace std;
 
 RedisLogin::RedisLogin():re_command(""),
                          user_key(""),
-                         email_2_uid_key("")
+                         email_2_uid_key(""),
+                         user_id()
 {
 
 }
@@ -17,16 +18,16 @@ RedisLogin::~RedisLogin()
 
 RedisResult RedisLogin::Registration(RedisUtil& util, const UserInfo& user, const std::string& passwd)
 {
-    MakeEmail2UidCmd(RedisOperator::GET, user, 0);
+    MakeEmail2UidCmd(RedisOperator::GET, user);
     if (RedisResult::NIL != IsExist(util))
     {
         cerr<<"the email has registration, please login with it..."<<endl;
         return RedisResult::OK;
     }
     auto& instance = RedisGlobDataRepo::GetInstance();
-    auto user_id = instance.GenUserId();
+    user_id = std::to_string(instance.GenUserId());
     //create email & user_id map
-    MakeEmail2UidCmd(RedisOperator::SET, user, user_id);
+    MakeEmail2UidCmd(RedisOperator::SET, user);
 
     if(RedisResult::OK != util.ExecCommand(re_command))
     {
@@ -35,7 +36,7 @@ RedisResult RedisLogin::Registration(RedisUtil& util, const UserInfo& user, cons
     }
 
     //create user_id and user_info map
-    MakeUserInfoCmd(RedisOperator::SET, user, user_id, passwd);
+    MakeUserInfoCmd(RedisOperator::SET, user, passwd);
 
     if(RedisResult::OK != util.ExecCommand(re_command))
     {
@@ -53,14 +54,14 @@ std::string RedisLogin::Login(RedisUtil& util, const UserInfo& user, const std::
     redisReply *reply = nullptr;
     do
     {
-        MakeEmail2UidCmd(RedisOperator::GET, user, 0);
+        MakeEmail2UidCmd(RedisOperator::GET, user);
         if (RedisResult::OK != IsExist(util))
         {
             cerr<<"the email not registration, please registration with it..."<<endl;
             break;
         }
 
-        MakeEmail2UidCmd(RedisOperator::GET, user, 0);
+        MakeEmail2UidCmd(RedisOperator::GET, user);
         if( RedisResult::OK !=util.ExecCommand(re_command))
         {
             break;
@@ -129,7 +130,7 @@ RedisResult RedisLogin::UnRegistration(RedisUtil& util, const UserInfo& user, co
 
         //clear user info map
         re_command.assign("HDEL ");
-        MakeUserKey(uid);
+        MakeUserKey();
         re_command += user_key;
         re_command += " id name email password";
         if(RedisResult::ERROR == util.ExecCommand(re_command))
@@ -159,6 +160,11 @@ RedisResult RedisLogin::UnRegistration(RedisUtil& util, const UserInfo& user, co
     return result;
 }
 
+std::string& RedisLogin::GetUserId()
+{
+    return user_id;
+}
+
 RedisResult RedisLogin::IsExist(RedisUtil& util)
 {
     RedisResult result = RedisResult::OK;
@@ -177,16 +183,10 @@ RedisResult RedisLogin::IsExist(RedisUtil& util)
     return result;
 }
 
-void RedisLogin::MakeUserKey( UInt64 uid)
+void RedisLogin::MakeUserKey()
 {
     user_key.assign("weibo::user::");
-    user_key += std::to_string(uid);
-}
-
-void RedisLogin::MakeUserKey(std::string& uid)
-{
-    user_key.assign("weibo::user::");
-    user_key += uid;
+    user_key += user_id;
 }
 
 void RedisLogin::MakeEmail2UidKey()
@@ -194,7 +194,7 @@ void RedisLogin::MakeEmail2UidKey()
     email_2_uid_key.assign("weibo::email_to_uid");
 }
 
-void RedisLogin::MakeEmail2UidCmd(RedisOperator type,const UserInfo& user, UInt64 uid)
+void RedisLogin::MakeEmail2UidCmd(RedisOperator type,const UserInfo& user)
 {
     MakeEmail2UidKey();
     if (type == RedisOperator::GET)
@@ -211,13 +211,13 @@ void RedisLogin::MakeEmail2UidCmd(RedisOperator type,const UserInfo& user, UInt6
     if (type == RedisOperator::SET)
     {
         re_command += " ";
-        re_command += std::to_string(uid);
+        re_command += user_id;
     }
 }
 
-void RedisLogin::MakeUserInfoCmd(RedisOperator type,const UserInfo& user, UInt64 uid, const std::string& passwd)
+void RedisLogin::MakeUserInfoCmd(RedisOperator type,const UserInfo& user, const std::string& passwd)
 {
-    MakeUserKey(uid);
+    MakeUserKey();
     if (type == RedisOperator::GET)
     {
         re_command.assign("HMGET ");
@@ -228,7 +228,7 @@ void RedisLogin::MakeUserInfoCmd(RedisOperator type,const UserInfo& user, UInt64
         re_command.assign("HMSET ");
         re_command +=  user_key;
         re_command += " id ";
-        re_command += std::to_string(uid);
+        re_command += user_id;
         re_command += " name ";
         re_command += user.name;
         re_command += " email ";

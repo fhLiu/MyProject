@@ -28,6 +28,16 @@ struct UserInfo
     UInt8       age;
 };
 
+struct UserId
+{
+    UserId(std::string& user_id):user_id(user_id)
+    {}
+    std::string& GetUserId()
+    {return user_id;}
+private:
+    std::string user_id;
+};
+
 struct RedisUtil
 {
     RedisUtil(std::string& ip_addr, UInt16 port);

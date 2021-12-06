@@ -15,8 +15,8 @@ struct RedisLoginTest : public testing::Test
 
     void TearDown()override
     {
-        auto& instance = RedisGlobDataRepo::GetInstance();
-        instance.ClearAll();
+        // auto& instance = RedisGlobDataRepo::GetInstance();
+        // instance.ClearAll();
     }
     RedisLoginTest():server_ip("127.0.0.1"),
                      server_port(6379),
