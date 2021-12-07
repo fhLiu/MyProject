@@ -3,5 +3,5 @@
 
 struct Wallet : Bag
 {
-    std::string GetName();
+    void GetName();
 };

@@ -9,7 +9,7 @@ struct Bag
         p_color.reset(color);
     }
 
-    virtual std::string GetName() = 0;
+    virtual void GetName() = 0;
 
 protected:
     std::shared_ptr<Color> p_color;

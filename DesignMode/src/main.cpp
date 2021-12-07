@@ -9,6 +9,13 @@
 #include "CZSpecialtyProxy.h"
 #include "OpticalAdapter.h"
 #include "ElectricAdapter.h"
+#include "Wallet.h"
+#include "HandBag.h"
+#include "Yellow.h"
+#include "Red.h"
+#include "Succubus.h"
+#include "Girl.h"
+#include "OriginalMorrigan.h"
 
 using namespace std;
 
@@ -74,6 +81,31 @@ TEST_F(DesignModeTest, ADAPTER_MODE_DRIVE_SELECTION)
     sp->Drive();
     sp.reset(new OpticalAdapter(omm));
     sp->Drive();
+}
+
+TEST_F(DesignModeTest, BRIDGE_MODE_BAG_AND_COLOR)
+{
+    Color *color = new Yellow();
+    std::shared_ptr<Bag>  wallet(new Wallet());
+    wallet->SetColor(color);
+    wallet->GetName();
+
+    color = new Red();
+    wallet->SetColor(color);
+    wallet->GetName();
+
+}
+
+TEST_F(DesignModeTest, DECORATOR_MODE_MORRIGAN)
+{
+    std::shared_ptr<Morrigan> mp(new OriginalMorrigan());
+    mp->Display();
+    
+    mp.reset(new Succubus(new OriginalMorrigan()));
+    mp->Display();
+
+    mp.reset(new Girl(new OriginalMorrigan()));
+    mp->Display();
 }
 
 int main(int argc, char *argv[])

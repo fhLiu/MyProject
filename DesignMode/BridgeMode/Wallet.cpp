@@ -1,6 +1,6 @@
 #include "Wallet.h"
 
-std::string Wallet::GetName()
+void Wallet::GetName()
 {
-    return p_color->GetColor()+" Wallet";
+    std::cout<<p_color->GetColor()+" Wallet"<<std::endl;
 }

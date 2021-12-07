@@ -3,5 +3,5 @@
 
 struct HandBag : Bag
 {
-    std::string GetName();
+    void GetName();
 };

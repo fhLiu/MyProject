@@ -1,6 +1,6 @@
 #include "HandBag.h"
 
-std::string HandBag::GetName()
+void HandBag::GetName()
 {
-    return p_color->GetColor() + " HandBag";
+   std::cout<<p_color->GetColor() + " HandBag"<<std::endl;
 }
