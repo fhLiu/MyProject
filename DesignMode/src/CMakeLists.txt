@@ -15,6 +15,7 @@ SET(proxy_dir                           "${main_dir}/../ProxyMode")
 SET(adapter_dir                         "${main_dir}/../AdapterMode")
 SET(bridge_dir                          "${main_dir}/../BridgeMode")
 SET(decorator_dir                       "${main_dir}/../DecoratorMode")
+SET(flyweight_dir                       "${main_dir}/../FlyweightMode")
 
 IF(WORKMODE)
     SET(base_dir                        "/home/users/andrew2_liu/thirdlibrary")
@@ -31,6 +32,7 @@ INCLUDE_DIRECTORIES(
     "${adapter_dir}"
     "${bridge_dir}"
     "${decorator_dir}"
+    "${flyweight_dir}"
     "${base_dir}/include"
 )
 
@@ -53,7 +55,8 @@ ADD_SUBDIRECTORY("${proxy_dir}"                     czproxy)
 ADD_SUBDIRECTORY("${adapter_dir}"                   adapter)
 ADD_SUBDIRECTORY("${bridge_dir}"                    bridge)
 ADD_SUBDIRECTORY("${decorator_dir}"                 decorator)
+ADD_SUBDIRECTORY("${flyweight_dir}"                 flyweight)
 
 ADD_EXECUTABLE(${PROJECT_NAME}  ${app_src})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME}  gtest pthread singleton simplefac factorymethod builder czproxy adapter bridge decorator)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME}  gtest pthread singleton simplefac factorymethod builder czproxy adapter bridge decorator flyweight)

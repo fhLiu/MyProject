@@ -16,6 +16,9 @@
 #include "Succubus.h"
 #include "Girl.h"
 #include "OriginalMorrigan.h"
+#include "BlackPieces.h"
+#include "WhitePieces.h"
+#include "WeiqiFactory.h"
 
 using namespace std;
 
@@ -106,6 +109,25 @@ TEST_F(DesignModeTest, DECORATOR_MODE_MORRIGAN)
 
     mp.reset(new Girl(new OriginalMorrigan()));
     mp->Display();
+}
+
+TEST_F(DesignModeTest, FLYWEIGHT_MODE_WEIQI)
+{
+    WeiqiFactory *wf = new WeiqiFactory();
+    Point pt;
+    pt.x = 3;
+    pt.y = 4;
+
+    auto wc = wf->GetChessPieces("w");
+    wc->DownPieces(pt);
+
+    pt.x = 3;
+    pt.y = 5;
+    wc = wf->GetChessPieces("b");
+    wc->DownPieces(pt);
+    
+    delete wf;
+    wf = nullptr;
 }
 
 int main(int argc, char *argv[])
