@@ -19,6 +19,11 @@
 #include "BlackPieces.h"
 #include "WhitePieces.h"
 #include "WeiqiFactory.h"
+#include "SafeBags.h"
+#include "SafeGoods.h"
+#include "AmericanStudyBorad.h"
+#include "JapanStudyBorad.h"
+#include "WyTour.h"
 
 using namespace std;
 
@@ -128,6 +133,57 @@ TEST_F(DesignModeTest, FLYWEIGHT_MODE_WEIQI)
     
     delete wf;
     wf = nullptr;
+}
+
+TEST_F(DesignModeTest, SAFE_COMPOSITE_MODE_BAG_GOODS)
+{
+    TransBags bigBag("大袋子"), mediumBag("中袋子"), smallRedBag("红色小袋子"), smallWhiteBag("白色小袋子");
+    TransGoods wytc("婺源特产", 2, 15),wydt("婺源地图", 4, 6.5),sgxg("韶关香菇", 2, 15.8),czlwy("郴州临武鸭", 1, 68),
+    czdjy("郴州东江鱼", 3, 36),jdzcq("景德镇瓷器", 1, 198),lining("李宁运动鞋",1, 389);
+
+    smallRedBag.Add(&wytc);
+    smallRedBag.Add(&sgxg);
+
+    smallWhiteBag.Add(&wydt);
+    smallWhiteBag.Add(&czdjy);
+
+    mediumBag.Add(&lining);
+    mediumBag.Add(&smallWhiteBag);
+
+    bigBag.Add(&jdzcq);
+    bigBag.Add(&czlwy);
+    bigBag.Add(&mediumBag);
+    bigBag.Add(&smallRedBag);
+
+    std::cout<<"当前选购的商品有："<<std::endl;
+    bigBag.Show();
+    std::cout<<"==================================================="<<std::endl;
+    std::cout<<"需要支付的价格是：￥"<<bigBag.Caculation()<<"。"<<std::endl;
+}
+
+TEST_F(DesignModeTest, TEMPLATE_MODE_ABOUT_STUDY_ABROAD)
+{
+    std::shared_ptr<StudyAbroad> sp(new AmericanStudyBroad());
+    sp->TemplateMethod();
+    std::cout<<"==================================================="<<std::endl;
+    sp.reset(new JapanStudyAbroad());
+    sp->TemplateMethod();
+}
+
+TEST_F(DesignModeTest, STRATEGY_MODE_SG_WY_TRAFFIC_TOOLS)
+{
+    TripMode* car = new ByCar();
+    WyTour wyt;
+    wyt.SetTripMode(car);
+    wyt.GoOut();
+
+    TripMode* train = new ByTrain();
+    wyt.SetTripMode(train);
+    wyt.GoOut();
+
+    TripMode* self_drive = new BySelfDrive();
+    wyt.SetTripMode(self_drive);
+    wyt.GoOut();
 }
 
 int main(int argc, char *argv[])
