@@ -19,6 +19,7 @@ SET(flyweight_dir                       "${main_dir}/../FlyweightMode")
 SET(composite_dir                       "${main_dir}/../CompositeMode")
 SET(template_dir                        "${main_dir}/../TemplateMode")
 SET(strategy_dir                        "${main_dir}/../StrategyMode")
+SET(command_dir                         "${main_dir}/../CommandMode")
 
 IF(WORKMODE)
     SET(base_dir                        "/home/users/andrew2_liu/thirdlibrary")
@@ -39,6 +40,7 @@ INCLUDE_DIRECTORIES(
     "${composite_dir}"
     "${template_dir}"
     "${strategy_dir}"
+    "${command_dir}"
     "${base_dir}/include"
 )
 
@@ -65,8 +67,9 @@ ADD_SUBDIRECTORY("${flyweight_dir}"                 flyweight)
 ADD_SUBDIRECTORY("${composite_dir}"                 composite)
 ADD_SUBDIRECTORY("${template_dir}"                  template)
 ADD_SUBDIRECTORY("${strategy_dir}"                  strategy)
+ADD_SUBDIRECTORY("${command_dir}"                   command_mode)
 
 ADD_EXECUTABLE(${PROJECT_NAME}  ${app_src})
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}  gtest pthread singleton simplefac factorymethod builder czproxy adapter bridge decorator flyweight 
-composite template strategy)
+composite template strategy command_mode)
