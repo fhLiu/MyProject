@@ -1,7 +1,11 @@
 #include "HunDun.h"
-#include <iostream>
+
+HunDun::HunDun():sp(new HunDunChef())
+{
+
+}
 
 void HunDun::Cooking()
 {
-    std::cout<<"做混沌了"<<std::endl;
+    sp->action();
 }

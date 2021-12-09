@@ -1,7 +1,11 @@
 #include "ChangFen.h"
-#include <iostream>
+
+ChangFen::ChangFen():sp(new ChangFenChef())
+{
+
+}
 
 void ChangFen::Cooking()
 {
-    std::cout<<"做肠粉了"<<std::endl;
+    sp->action();
 }

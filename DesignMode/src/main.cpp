@@ -24,6 +24,10 @@
 #include "AmericanStudyBorad.h"
 #include "JapanStudyBorad.h"
 #include "WyTour.h"
+#include "ChangFen.h"
+#include "HeFen.h"
+#include "HunDun.h"
+#include "ChainClient.h"
 
 using namespace std;
 
@@ -184,6 +188,35 @@ TEST_F(DesignModeTest, STRATEGY_MODE_SG_WY_TRAFFIC_TOOLS)
     TripMode* self_drive = new BySelfDrive();
     wyt.SetTripMode(self_drive);
     wyt.GoOut();
+}
+
+TEST_F(DesignModeTest, COMMAND_MODE_BREAKFAST)
+{
+    std::shared_ptr<BreakFast> sp(new HunDun());
+    sp->Cooking();
+
+    sp.reset(new HeFen());
+    sp->Cooking();
+
+    sp.reset(new ChangFen());
+    sp->Cooking();
+}
+
+TEST_F(DesignModeTest, CHAINOFRESPONSBILITY_MODE_ABOUT_VACATION)
+{
+    int time_len = 5, nums = 0;
+    EXPECT_EQ(LeaveApprovalProcess(time_len, nums), true);
+    EXPECT_EQ(nums, 2);
+
+    time_len = 10;
+    nums = 0;
+    EXPECT_EQ(LeaveApprovalProcess(time_len, nums), true);
+    EXPECT_EQ(nums, 4);
+
+    time_len = 15;
+    nums = 0;
+    EXPECT_EQ(LeaveApprovalProcess(time_len, nums), false);
+    EXPECT_EQ(nums, 4);
 }
 
 int main(int argc, char *argv[])

@@ -1,7 +1,11 @@
 #include "HeFen.h"
-#include <iostream>
+
+HeFen::HeFen():sp(new HeFenChef())
+{
+
+}
 
 void HeFen::Cooking()
 {
-    std::cout<<"做河粉了"<<std::endl;
+    sp->action();
 }
