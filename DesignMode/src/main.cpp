@@ -28,6 +28,10 @@
 #include "HeFen.h"
 #include "HunDun.h"
 #include "ChainClient.h"
+#include "ThreadContext.h"
+#include "BellEventSource.h"
+#include "StuEventListener.h"
+#include "TeachEventListener.h"
 
 using namespace std;
 
@@ -217,6 +221,36 @@ TEST_F(DesignModeTest, CHAINOFRESPONSBILITY_MODE_ABOUT_VACATION)
     nums = 0;
     EXPECT_EQ(LeaveApprovalProcess(time_len, nums), false);
     EXPECT_EQ(nums, 4);
+}
+
+TEST_F(DesignModeTest, STATE_MODE_THREAD_STATE_THRANSFER)
+{
+    std::vector<string> state_name{"新建状态","就绪状态","运行状态","阻塞状态","死亡状态"};
+    ThreadContext ctxt;
+    EXPECT_EQ(ctxt.GetState()->GetName(), state_name[0]);
+    ctxt.Start();
+    EXPECT_EQ(ctxt.GetState()->GetName(), state_name[1]);
+    ctxt.GetCPU();
+    ctxt.Resume();
+    ctxt.Suspend();
+    EXPECT_EQ(ctxt.GetState()->GetName(), state_name[3]);
+    ctxt.Resume();
+    EXPECT_EQ(ctxt.GetState()->GetName(), state_name[1]);
+}
+
+TEST_F(DesignModeTest, OBSERVER_MODE_RING_AND_SCHOOL)
+{
+    BellEventSource  obj;
+    RingEvent        ring;
+    
+    std::shared_ptr<EventListener> stu(new StuEventListener());
+    std::shared_ptr<EventListener> tech(new TeachEventListener());
+    ring.ChangeSoundType(SOUND_TYPE::SHANGKE);
+    obj.AddListener(tech);
+    obj.AddListener(stu);
+    obj.Ring(ring);
+    ring.ChangeSoundType(SOUND_TYPE::XIAKE);
+    obj.Ring(ring);
 }
 
 int main(int argc, char *argv[])

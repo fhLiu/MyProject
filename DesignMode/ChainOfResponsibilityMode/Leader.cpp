@@ -1,6 +1,6 @@
 #include "Leader.h"
 
-Leader::Leader():next(nullptr),transfer_number(0)
+Leader::Leader():next(nullptr)
 {}
 
 void Leader::SetNext(Leader* next)
