@@ -3,6 +3,8 @@
 
 struct Seller : Customer
 {
-    /* data */
+    Seller(std::string& name):Customer(name){}
+    void Send(std::string&) override;
+    void Receive(std::string& from, std::string& to) override;
 };
 
