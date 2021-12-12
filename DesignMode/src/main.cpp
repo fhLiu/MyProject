@@ -33,7 +33,6 @@
 #include "StuEventListener.h"
 #include "TeachEventListener.h"
 
-using namespace std;
 
 using namespace std;
 using ::testing::InitGoogleTest;
