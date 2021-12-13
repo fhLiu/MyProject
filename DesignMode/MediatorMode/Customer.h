@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Medium.h"
 
+struct Medium;
+
 struct Customer
 {
 

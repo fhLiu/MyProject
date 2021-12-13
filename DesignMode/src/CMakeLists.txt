@@ -24,6 +24,7 @@ SET(responsibility_dir                  "${main_dir}/../ChainOfResponsibilityMod
 SET(state_mode_dir                      "${main_dir}/../StateMode")
 SET(observer_dir                        "${main_dir}/../ObserverMode")
 SET(mediator_dir                        "${main_dir}/../MediatorMode")
+SET(mementor_dir                        "${main_dir}/../MementoMode")
 
 IF(WORKMODE)
     SET(base_dir                        "/home/users/andrew2_liu/thirdlibrary")
@@ -49,6 +50,7 @@ INCLUDE_DIRECTORIES(
     "${state_mode_dir}"
     "${observer_dir}"
     "${mediator_dir}"
+    "${mementor_dir}"
     "${base_dir}/include"
 )
 
@@ -80,8 +82,9 @@ ADD_SUBDIRECTORY("${responsibility_dir}"            responsibility)
 ADD_SUBDIRECTORY("${state_mode_dir}"                state_mode)
 ADD_SUBDIRECTORY("${observer_dir}"                  observer)
 ADD_SUBDIRECTORY("${mediator_dir}"                  mediator)
+ADD_SUBDIRECTORY("${mementor_dir}"                  mementor)
 
 ADD_EXECUTABLE(${PROJECT_NAME}  ${app_src})
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}  gtest pthread singleton simplefac factorymethod builder czproxy adapter bridge decorator flyweight 
-composite template strategy command_mode responsibility state_mode observer mediator)
+composite template strategy command_mode responsibility state_mode observer mediator mementor)

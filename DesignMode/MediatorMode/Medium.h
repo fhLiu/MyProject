@@ -3,6 +3,8 @@
 #include <memory>
 #include "Customer.h"
 
+struct  Customer;
+
 struct Medium
 {
     virtual void Register(std::shared_ptr<Customer>) = 0;

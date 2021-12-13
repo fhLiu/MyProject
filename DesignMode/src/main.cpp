@@ -32,6 +32,7 @@
 #include "BellEventSource.h"
 #include "StuEventListener.h"
 #include "TeachEventListener.h"
+#include "Originator.h"
 
 
 using namespace std;
@@ -250,6 +251,24 @@ TEST_F(DesignModeTest, OBSERVER_MODE_RING_AND_SCHOOL)
     obj.Ring(ring);
     ring.ChangeSoundType(SOUND_TYPE::XIAKE);
     obj.Ring(ring);
+}
+
+TEST_F(DesignModeTest, MEMENTOR_MODE_CLASSICAL_GIRL)
+{
+    std::vector<std::string> four_girl{"西施", "貂蝉", "昭君", "杨贵妃"};
+    Originator initial(four_girl[0]);
+    MemGirlStack mementor;
+    mementor.Push(initial.CreateMementor());
+    initial.SetAdmire(four_girl[2]);
+    mementor.Push(initial.CreateMementor());
+
+    initial.SetAdmire(four_girl[1]);
+    mementor.Push(initial.CreateMementor());
+
+    auto res = mementor.Pop();
+    EXPECT_NE(res, nullptr);
+    initial.RestoreMementor(*res);
+    std::cout<<"回退到当前美女是："<<res->GetName()<<"  "<<initial.GetAdmire()<<std::endl;
 }
 
 int main(int argc, char *argv[])
